@@ -1,0 +1,8 @@
+{
+  "id": "{{id}}",
+  "petId": "{{petId}}",
+  "quantity": "{{quantity}}",
+  "shipDate": "2024-09-21T23:01:45.038Z",
+  "status": "{{status}}",
+  "complete": true
+}

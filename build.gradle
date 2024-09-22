@@ -1,0 +1,77 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+        resources {
+            srcDirs = ['src/test/resources']
+        }
+    }
+}
+
+
+dependencies {
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.0.0'
+    implementation group: 'org.unix4j', name: 'unix4j-command', version: '0.5'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    implementation 'org.testng:testng:6.14.3'
+    implementation 'org.seleniumhq.selenium:selenium-java:3.11.0'
+    implementation 'org.seleniumhq.selenium:htmlunit-driver:2.36.0'
+    implementation 'net.masterthought:cucumber-reporting:3.8.0'
+    implementation 'io.cucumber:cucumber-java:7.11.0'
+    implementation group: 'io.cucumber', name: 'cucumber-picocontainer', version: '7.11.0'
+    implementation group: 'org.clojure', name: 'java.jdbc', version: '0.7.10'
+    implementation group: 'io.github.hakky54', name: 'sslcontext-kickstart-for-apache4', version: '7.4.3'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.10'
+    implementation group: 'com.github.tsohr', name: 'json', version: '0.0.1'
+    implementation group: 'com.jayway.jsonpath', name: 'json-path', version: '2.4.0'
+    implementation 'io.cucumber:cucumber-testng:7.11.0'
+    implementation group: 'com.aventstack', name: 'extentreports-cucumber4-adapter', version: '1.0.12'
+    testImplementation ("io.qameta.allure:allure-cucumber4-jvm:2.10.0")
+    implementation group: 'org.codehaus.gpars', name: 'gpars', version: '1.2.1'
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.7'
+    testImplementation 'junit:junit:4.13.2'
+    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'io.rest-assured:rest-assured:5.5.0'
+    implementation 'io.rest-assured:json-path:5.5.0'
+    implementation 'io.rest-assured:json-schema-validator:5.5.0'
+    implementation 'org.slf4j:slf4j-simple:1.7.32'
+    implementation 'org.hamcrest:hamcrest:2.2'
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.register('cucumberTest', JavaExec) {
+    main = 'io.cucumber.core.cli.Main'
+    classpath = sourceSets.test.runtimeClasspath
+    args = [
+            '--plugin', 'pretty',
+            '--plugin', 'json:build/cucumber.json',
+            '--tags', project.hasProperty('tags') ? project.tags : '',
+            'src/main/java/Features' // Point to your feature files directory
+    ]
+}
